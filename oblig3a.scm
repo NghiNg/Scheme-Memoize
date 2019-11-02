@@ -79,7 +79,8 @@
     (set! table (help table args))
     
     ;Output.
-    (display (string-append "good " (lookup 'time table) " " (lookup 'title table)))
+    (display (string-append "good "
+                            (lookup 'time table) " " (lookup 'title table)))
     (newline)))
 
 ;Generell hjelpeprosedyre som returnerer en tabell
@@ -103,29 +104,44 @@
 
 ;============= OPPGAVE 2A ================
 
+
+;Prosedyre for å konverte liste til strøm.
 (define (list-to-stream list)
-  (cons-stream (car list) (cdr list)))
+  (if (null? list)
+      '()
+      (cons-stream (car list) (list-to-stream (cdr list)))))
 
 
-(list-to-stream '(1 2 3 4 5))
-
-
+;Prosedyre for å konverte [n] elementer av strøm til liste.
 (define (stream-to-list stream . n)
-  (if (null? n)
-      ;(cons (stream-car stream) (stream-cdr stream))
-      (if (not (null? stream))
-          (cons (stream-car stream) (stream-to-list (stream-cdr stream)))
-          '())
-      (if (zero? (car n))
-          '()
-          (cons (stream-car stream)
-                (stream-to-list (stream-cdr stream) (- (car n) 1))))))
+  (if (null? stream)
+      '()
+      (if (not (null? (cdr stream)))
+          (if (null? n)
+              (cons (stream-car stream) (stream-to-list (stream-cdr stream)))
+              (if (> (car n) 1)
+                  (cons (stream-car stream)
+                        (stream-to-list (stream-cdr stream) (- (car n) 1)))
+                  (cons (stream-car stream) '()))))))
 
-(stream-to-list (stream-interval 10 20))
-(show-stream nats 15)
-(stream-to-list nats 10)
 
-"HAR IKKE GJORT OPPGAVE 2B!!!"
+
+;Test:
+;(list-to-stream '(1 2 3 4 5))
+;(define test-stream (list-to-stream '(8 3 5 7)))
+;(stream-to-list test-stream)
+;(stream-to-list (stream-interval 10 20))
+;(stream-to-list nats 10)
+
+
+
+;============= OPPGAVE 2B ================
+
+
+
+
+;============= OPPGAVE 2C ================
+
 
 ;Oppgave 2c
 #|
@@ -140,7 +156,9 @@ for en liste med alle unike variabler.
 
 |#
 
-;Oppgave 2d
+
+;============= OPPGAVE 2D ================
+
 (define (memq2 item x)
   (cond ((number? x) #f)
         ((eq? item (stream-car x)) x)
