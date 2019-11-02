@@ -32,14 +32,17 @@
 ;============= OPPGAVE 1B ================
 
 
-(define (orig-proc proc)
-  (set! orig-proc proc))
+;(define (orig-proc proc)
+ ; (set! orig-proc proc))
 
 (define (mem2 message proc)
     
+    (let ((orig-proc proc))
+             (set! orig-proc proc)
+
     (cond ((eq? message 'memoize)
 
-           (orig-proc proc)
+           
 
            (let ((table (make-table)))       
              (lambda args
@@ -51,11 +54,12 @@
 
           ((eq? message 'unmemoize) orig-proc)
           
-          (else 'Error)))
+          (else 'Error))))
 
 
 
 ;Test:
+"AAAAHHHHH"
 (set! fib (mem2 'memoize fib))
 (fib 3)
 (fib 3)
@@ -67,8 +71,8 @@
 
 
 (set! test-proc (mem2 'memoize test-proc))
-;(test-proc)
-;(test-proc)
-;(test-proc 40 41 42 43 44)
-;(test-proc 40 41 42 43 44)
-;(test-proc 42 43 44)
+(test-proc)
+(test-proc)
+(test-proc 40 41 42 43 44)
+(test-proc 40 41 42 43 44)
+(test-proc 42 43 44)
