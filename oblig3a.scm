@@ -1,4 +1,4 @@
-(load "prekode3a.scm")
+(load "prekode3a.scm")(load "prekode3a.scm")
 
 
 ;============= OPPGAVE 1A ================
@@ -88,3 +88,32 @@
 (mem-fib 3)
 (mem-fib 2)
 |#
+
+;1c)
+
+
+
+(define (greet . args)
+  (let ((table (make-table)))
+    (insert! 'time "day" table)
+    (insert! 'title "friend" table)
+    (set! table (help table args))
+      (display "good")
+      (display " ")
+      (display (lookup 'time table))
+      (display " ")
+      (display (lookup 'title table)) (newline)))
+
+(define (help table . args)
+  (if (not (null? (car args)))
+      (let ((arg (car args)))
+      (if (not (eq? '() (cdr arg)))
+          (insert! (car arg) (cadr arg) table))
+      (help table (cddr arg))))
+  table)
+          
+      
+(greet)
+(greet 'time "evening")
+(greet 'title "sir" 'time "morning")
+(greet 'time "afternoon" 'title "dear")
