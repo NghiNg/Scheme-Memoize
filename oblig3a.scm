@@ -66,35 +66,42 @@
 
 ;============= OPPGAVE 1D ================
 
-
+;Den poengløse prosedyren greet med defaultverdier for argumentene.
 (define (greet . args)
   (let ((table (make-table)))
+    
+    ;Defaultverdier.
     (insert! 'time "day" table)
     (insert! 'title "friend" table)
+    
+    ;Lagrer håndtering av navngitte argumenter i en tabell.
+    ;Kaller på den generelle hjelpeprosedyren.
     (set! table (help table args))
-      (display "good")
-      (display " ")
-      (display (lookup 'time table))
-      (display " ")
-      (display (lookup 'title table)) (newline)))
+    
+    ;Output.
+    (display (string-append "good " (lookup 'time table) " " (lookup 'title table)))
+    (newline)))
 
+;Generell hjelpeprosedyre som returnerer en tabell
+;der (argumenter, verdier) som elementer.
 (define (help table . args)
   (if (not (null? (car args)))
       (let ((arg (car args)))
-      (if (not (eq? '() (cdr arg)))
-          (insert! (car arg) (cadr arg) table))
-      (help table (cddr arg))))
+        (if (not (null? (cdr arg)))
+            (insert! (car arg) (cadr arg) table))
+        (help table (cddr arg))))
   table)
           
-      
-(greet)
-(greet 'time "evening")
-(greet 'title "sir" 'time "morning")
-(greet 'time "afternoon" 'title "dear")
+
+;Test:
+;(greet)
+;(greet 'time "evening")
+;(greet 'title "sir" 'time "morning")
+;(greet 'time "afternoon" 'title "dear")
 
 
-;Oppgave 2a
 
+;============= OPPGAVE 2A ================
 
 (define (list-to-stream list)
   (cons-stream (car list) (cdr list)))
