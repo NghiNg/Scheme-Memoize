@@ -157,7 +157,16 @@ stream-car på som memq vil ha oss til å gjøre.
 For det tredje så vil den returnere en stream på grunn av cons-stream, i stedet
 for en liste med alle unike variabler.
 
-
-
 |#
 
+;Oppgave 2d
+(define (memq2 item x)
+  (cond ((number? x) #f)
+        ((eq? item (stream-car x)) x)
+        (else (memq2 item (stream-cdr x)))))
+
+(define (remove-duplicates lst)
+  (cond ((number? lst) (cons lst '()))
+        ((not (memq2 (stream-car lst) (stream-cdr lst)))
+         (cons (stream-car lst) (remove-duplicates (stream-cdr lst))))
+        (else (remove-duplicates (stream-cdr lst)))))
