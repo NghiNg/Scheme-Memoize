@@ -117,3 +117,27 @@
 (greet 'time "evening")
 (greet 'title "sir" 'time "morning")
 (greet 'time "afternoon" 'title "dear")
+
+
+
+
+(define (list-to-stream list)
+  (cons-stream (car list) (cdr list)))
+
+
+(define a (list-to-stream '(1 2 3 4)))
+
+
+
+(define (ny-to-list stream . n)
+  (if (null? n)
+      (cons (stream-car stream) (stream-cdr stream))
+      (if (zero? (car n))
+          '()
+          (cons (stream-car stream) (ny-to-list (stream-cdr stream) (- (car n) 1))))))
+
+     
+;(ny-to-list a 2)
+;(stream-to-list nats)
+;a
+(ny-to-list nats 10)
