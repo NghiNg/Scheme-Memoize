@@ -153,7 +153,9 @@ strøm.
 For det andre det stream-cdr returnerer ikke en liste med et element som vanlig
 cdr ville ha gjort, vanlig cdr returnerer f.eks (cdr '(2 3)) -> (3. '()) eller
 (3). Men stream-cdr returnerer bare 3, bare tallet. Og det kan vi ikke ta
-stream-car på som memq vil ha oss til å gjøre. 
+stream-car på som memq vil ha oss til å gjøre.
+For det tredje så vil den returnere en stream på grunn av cons-stream, i stedet
+for en liste med alle unike variabler.
 
 
 
