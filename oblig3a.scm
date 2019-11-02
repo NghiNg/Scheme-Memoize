@@ -26,8 +26,6 @@
           ;Alle andre tilfeller.
           (else 'Error))))
 
-
-
 ;Test:
 ;(set! fib (mem 'memoize fib))
 ;(fib 3)
@@ -48,12 +46,21 @@
 
 ;============= OPPGAVE 1C ================
 
-;Test:
 ;(define mem-fib (mem 'memoize fib))
 ;(mem-fib 3)
 ;(mem-fib 3)
 ;(mem-fib 2)
 
+
+;Den memoiserte prosedyren til fib blir aliaset som
+;mem-fib. Problemet er at mem-fib kun memoiserer
+;verdiene til parameterne den blir kalt på med, og ikke
+;alle andre verdier opp t.o.m. denne verdien. Omgivelsen
+;dens blir utvidet med en ny ramme for hver kall og retur-
+;verdien blir lagret i memoiseringstabellen. I oppgave 1a
+;så memoiserte vi destruktivt slik at hvert kall har den
+;memoiserte versjonen som paramter. Da vil alle verdier
+;som blir beregnet av fib lagret som i samme ramme. 
 
 
 
