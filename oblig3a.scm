@@ -137,8 +137,25 @@
           '())
       (if (zero? (car n))
           '()
-          (cons (stream-car stream) (stream-to-list (stream-cdr stream) (- (car n) 1))))))
+          (cons (stream-car stream)
+                (stream-to-list (stream-cdr stream) (- (car n) 1))))))
 
 (stream-to-list (stream-interval 10 20))
 (show-stream nats 15)
 (stream-to-list nats 10)
+
+"HAR IKKE GJORT OPPGAVE 2B!!!"
+
+;Oppgave 2c
+#|
+For det første så vil memq ikke terminere dersom vi kjører med en uendelig lang
+strøm.
+For det andre det stream-cdr returnerer ikke en liste med et element som vanlig
+cdr ville ha gjort, vanlig cdr returnerer f.eks (cdr '(2 3)) -> (3. '()) eller
+(3). Men stream-cdr returnerer bare 3, bare tallet. Og det kan vi ikke ta
+stream-car på som memq vil ha oss til å gjøre. 
+
+
+
+|#
+
