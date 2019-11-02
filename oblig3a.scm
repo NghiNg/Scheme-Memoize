@@ -119,25 +119,26 @@
 (greet 'time "afternoon" 'title "dear")
 
 
+;Oppgave 2a
 
 
 (define (list-to-stream list)
   (cons-stream (car list) (cdr list)))
 
 
-(define a (list-to-stream '(1 2 3 4)))
+(list-to-stream '(1 2 3 4 5))
 
 
-
-(define (ny-to-list stream . n)
+(define (stream-to-list stream . n)
   (if (null? n)
-      (cons (stream-car stream) (stream-cdr stream))
+      ;(cons (stream-car stream) (stream-cdr stream))
+      (if (not (null? stream))
+          (cons (stream-car stream) (stream-to-list (stream-cdr stream)))
+          '())
       (if (zero? (car n))
           '()
-          (cons (stream-car stream) (ny-to-list (stream-cdr stream) (- (car n) 1))))))
+          (cons (stream-car stream) (stream-to-list (stream-cdr stream) (- (car n) 1))))))
 
-     
-;(ny-to-list a 2)
-;(stream-to-list nats)
-;a
-(ny-to-list nats 10)
+(stream-to-list (stream-interval 10 20))
+(show-stream nats 15)
+(stream-to-list nats 10)
