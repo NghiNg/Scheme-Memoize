@@ -111,12 +111,6 @@
       '()
       (cons-stream (car list) (list-to-stream (cdr list)))))
 
-(define (list-to-stream2 list)
-  (if (null? list)
-      '()
-      (cons-stream (car (reverse list)) (list-to-stream (cdr (reverse list))))))
-
-
 ;Prosedyre for å konverte [n] elementer av strøm til liste.
 (define (stream-to-list stream . n)
   (if (null? stream)
