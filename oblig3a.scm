@@ -200,10 +200,41 @@
 
 
 ;Test:
-(define t4 (list-to-stream '(8 8 3 1 3 5 7 7)))
-(show-stream (remove-duplicates t4))
+;(define t4 (list-to-stream '(8 8 3 1 3 5 7 7)))
+;(show-stream (remove-duplicates t4))
 
 
 
 ;============= OPPGAVE 2E ================
 
+#|
+REPL'et printer ut 0 1 2 3 4 5 5 6 7 7 nedover.
+0 printes ut når x blir definert, dette er fordi stream-interval prosedyren
+vil selv printe ut seg selv, så når (stream-map show (stream-interval 0 10))
+blir kalt så vil stream-map sende show på første i intervallet, men siden
+den er delayed så blir ikke resten kalt.
+
+(stream-ref x 5) vil så printe ut 1 2 3 4 5 5, 1 2 3 4 5 blir printet ut først
+fordi igjen, x er definert som å printe ut hele intervallet med show, så det
+vil skje først, mens stream-ref bare vil ha den på posisjon 5, og derfor vil
+5 printes ut etter. 0 printes ikke igjen siden det bare blir printet ut når
+kalt første gangen som definert i x.
+
+Derfor når (stream-ref x 7) blir kalt så printes ikke hele rekkefølgen til
+intervallet på nytt, men delayen blir forced og printer derfor videre 6 og 7.
+Og stream-ref vil da til slutt returnere 7.
+
+Hvis stream-ref kommandoene hadde stått i en annen rekkefølge, f.eks 7 først og
+så 5, så hadde den printet 1 2 3 4 5 6 7 7 og så 5 til slutt, fordi show på
+intervallet i x allerede hadde blitt kalt, og stream-ref trengte bare å hente
+verdien 5.
+|#
+;Test
+#|
+(define x
+  (stream-map show
+              (stream-interval 0 10)))
+
+(stream-ref x 5)
+(stream-ref x 7)
+|#
