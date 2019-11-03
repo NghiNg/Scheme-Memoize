@@ -180,33 +180,30 @@
 ;============= OPPGAVE 2D ================
 
 
+
+;Hjelpeprosedyre for å sjekke om et gitt element er lik
+;eller ulik det første elementet i en strøm.
+(define (check-first-stream-element stream)
+  (lambda (given-element)
+    (not (eq? given-element (stream-car stream)))))
+        
+
+;Filterer strømmen i rekursjonen med alle elementer som hjelpeprosedyren
+;ovenfor returnerer som er ulike i strømmen.
 (define (remove-duplicates stream)
   (if (stream-null? stream)
       the-empty-stream
       (cons-stream (stream-car stream)
                    (remove-duplicates
-                    (stream-filter memq stream)))))
+                    (stream-filter
+                     (check-first-stream-element stream) stream)))))
 
 
-(define 
-
-
-
-
-
-(define t4 (list-to-stream '(8 3 5 7 7)))
+;Test:
+(define t4 (list-to-stream '(8 8 3 1 3 5 7 7)))
 (show-stream (remove-duplicates t4))
 
 
-#|
-(define (memq2 item x)
-  (cond ((number? x) #f)
-        ((eq? item (stream-car x)) x)
-        (else (memq2 item (stream-cdr x)))))
 
-(define (remove-duplicates lst)
-  (cond ((number? lst) (cons lst '()))
-        ((not (memq2 (stream-car lst) (stream-cdr lst)))
-         (cons (stream-car lst) (remove-duplicates (stream-cdr lst))))
-        (else (remove-duplicates (stream-cdr lst)))))
-|#
+;============= OPPGAVE 2E ================
+
