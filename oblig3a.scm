@@ -229,12 +229,30 @@ så 5, så hadde den printet 1 2 3 4 5 6 7 7 og så 5 til slutt, fordi show på
 intervallet i x allerede hadde blitt kalt, og stream-ref trengte bare å hente
 verdien 5.
 |#
-;Test
-#|
-(define x
-  (stream-map show
-              (stream-interval 0 10)))
 
-(stream-ref x 5)
-(stream-ref x 7)
-|#
+
+;============= OPPGAVE 2F ================
+
+
+(define (mul-streams m1 m2)
+  (stream-map * m1 m2))
+
+
+;Test:
+;(define m1 (list-to-stream '(8 8 3 1)))
+;(define m2 (list-to-stream '(2 2 2 2)))
+;(define m3 (list-to-stream '(5 5 3 7)))
+;(define m4 (list-to-stream '(0 1 2 3)))
+;(mul-streams m1 m2)
+
+
+;============= OPPGAVE 2G ================
+
+
+(define factorials
+  (cons-stream 1 (mul-streams factorials nats)))
+
+;Test:
+;(stream-ref factorials 5)
+;(stream-ref factorials 0)
+;(stream-ref factorials 1)
