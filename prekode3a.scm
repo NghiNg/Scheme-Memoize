@@ -4,7 +4,7 @@
 
 ;; Tabell-abstraksjon fra seksjon 3.3.3 i SICP:
 
-(define (make-table)ca
+(define (make-table)
   (list '*table*))
 
 (define (lookup key table)
