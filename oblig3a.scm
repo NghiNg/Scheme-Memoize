@@ -144,27 +144,61 @@
 ;============= OPPGAVE 2B ================
 
 
+(define (stream-map proc . argstreams)
+  (if (null? argstreams)
+      the-empty-stream
+      (cons-stream
+       (apply proc (map stream-car argstreams))
+       (apply stream-map (cons proc (map stream-cdr argstreams))))))
+
+
+;Test:
+;(define t1 (list-to-stream '(8 3 5 7)))
+;(define t2 (list-to-stream '(6 7 4)))
+;(define t3 (list-to-stream '(9 0 2 1 3 5)))
+;(define test (stream-map + t1 t2 t3))
+;(show-stream test 1)
+;(show-stream test 2)
+;(show-stream test 3)
+
 
 
 ;============= OPPGAVE 2C ================
 
 
-;Oppgave 2c
-#|
-For det første så vil memq ikke terminere dersom vi kjører med en uendelig lang
-strøm.
-For det andre det stream-cdr returnerer ikke en liste med et element som vanlig
-cdr ville ha gjort, vanlig cdr returnerer f.eks (cdr '(2 3)) -> (3. '()) eller
-(3). Men stream-cdr returnerer bare 3, bare tallet. Og det kan vi ikke ta
-stream-car på som memq vil ha oss til å gjøre.
-For det tredje så vil den returnere en stream på grunn av cons-stream, i stedet
-for en liste med alle unike variabler.
+;For det første, så vil memq ikke terminere dersom vi kjører med en uendelig
+;lang strøm. For det andre, stream-cdr returnerer ikke en liste med et element
+;som vanlig cdr ville ha gjort, men returnerer heller bare elementet. Vanlig cdr
+;returnerer f.eks (cdr '(2 3)) -> (3. '()) eller (3). Men stream-cdr returnerer
+;bare 3, bare elementet, når det ikke eksisterer flere promise i strømmen. Dette
+;kan vi ikke ta stream-car på som memq vil ha oss til å gjøre.
+;For det tredje så vil den returnere en stream på grunn av cons-stream, i stedet
+;for en liste med alle unike variabler.
 
-|#
 
 
 ;============= OPPGAVE 2D ================
 
+
+(define (remove-duplicates stream)
+  (if (stream-null? stream)
+      the-empty-stream
+      (cons-stream (stream-car stream)
+                   (remove-duplicates
+                    (stream-filter memq stream)))))
+
+
+(define 
+
+
+
+
+
+(define t4 (list-to-stream '(8 3 5 7 7)))
+(show-stream (remove-duplicates t4))
+
+
+#|
 (define (memq2 item x)
   (cond ((number? x) #f)
         ((eq? item (stream-car x)) x)
@@ -175,3 +209,4 @@ for en liste med alle unike variabler.
         ((not (memq2 (stream-car lst) (stream-cdr lst)))
          (cons (stream-car lst) (remove-duplicates (stream-cdr lst))))
         (else (remove-duplicates (stream-cdr lst)))))
+|#
