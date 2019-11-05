@@ -1,5 +1,7 @@
 (load "prekode3a.scm")
 
+;Studenter: abdulmm og bdnguye
+
 
 ;============= OPPGAVE 1A og 1B ================
 
@@ -227,8 +229,8 @@ verdien 5.
 ;============= OPPGAVE 2F ================
 
 
-(define (mul-streams m1 m2)
-  (stream-map * m1 m2))
+(define (mul-streams . args)
+  (apply stream-map * args))
 
 
 ;Test:
@@ -237,64 +239,10 @@ verdien 5.
 ;(define m3 (list-to-stream '(5 5 3 7)))
 ;(define m4 (list-to-stream '(0 1 2 3)))
 ;(mul-streams m1 m2)
+;(show-stream (mul-streams m1 m2 m3) 3)
 
-;=====================TESTING FOR 2F==========
-"2F"
-
-;Test:
-
-(define (mul-streams m1 m2)
-  (stream-map * m1 m2))
-
-(define (delist stream)
-  (if (number? (car stream))
-      stream
-      (if (not (number? (car stream)))
-          (delist (car stream))
-          stream)))
-
-(define (findsecond stream)
-  (display "Heyo")
-  (display stream)
-  (if (not (null? (cdr stream)))
-      (if (not (pair? (cdr stream)))
-          (cdr stream)
-          (findsecond (car stream)))))
-
-(define (mul-streams2 stream . args)
-  (display "start") (newline)
-  (display "stream: ")
-  (show stream)
-  (display "args: ")
-  (show args)
-  (show (delist args))
-  (let ((current (stream-map * stream (delist args))))
-    (if (null? args)
-        stream
-        (if (not (null? (cdr args)))
-            (mul-streams2 current (cdr args))
-            (if (pair? (car args))
-                (if (pair? (findsecond args))
-                    stream
-                    (mul-streams2 current (findsecond args))))))))
-
-
-;Test:
-(define m1 (list-to-stream '(8 8 3 1)))
-(define m2 (list-to-stream '(2 2 2 2)))
-(define m3 (list-to-stream '(5 5 3 7)))
-(define m4 (list-to-stream '(0 1 2 3)))
-(pair? (cdr m1))
-"Test 1"
-(show-stream (mul-streams2 m1 m2) 3)
-"Test 2"
-(define a (mul-streams2 m1 m2 m3 m4))
-(show a)
-
-"End of 2F"
 
 ;============= OPPGAVE 2G ================
-
 
 (define factorials
   (cons-stream 1 (mul-streams factorials nats)))
