@@ -4,7 +4,7 @@
 (mc-eval '(+ 1 2) the-global-environment)
 
 ;Denne starter ui-en.
-(read-eval-print-loop)
+;(read-eval-print-loop)
 
 
 ;1a
@@ -29,11 +29,11 @@
 ;gir 2
 
 ;2a
+
+(define (1+ arg) (+ arg 1))
+
+(mc-eval (1+ 5) the-global-environment)
 #|
-(define (1+ arg)
-  (+ arg 1))
-(define (1- arg)
-  (- arg 1))
 |#
 
 ;2b
@@ -47,3 +47,35 @@
 (set! a (reverse a))
 (set! a (cons 8 a))
 (reverse a)|#
+
+
+(define (and2 . args)
+  (if (null? (cdr args))
+      (car args)
+      (if (eq? #f (car args))
+          #f
+          (apply and2 (cdr args)))))
+
+
+(mc-eval (and2 #t #t (= 1 2)) the-global-environment)
+
+
+(define (or2 . args)
+  (if (null? (cdr args))
+      (car args)
+      (if (eq? #t (car args))
+          #t
+          (apply or2 (cdr args)))))
+
+
+(mc-eval (or2 #f #t #t #t) the-global-environment)
+
+#|
+(define (if2 test1 utfall1 utfall2 . args)
+  (eq? #t test1)
+  utfall1
+  (if (null? args)
+      utfall2
+|#
+      
+  
