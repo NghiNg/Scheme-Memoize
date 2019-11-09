@@ -29,3 +29,21 @@
 ;gir 2
 
 ;2a
+#|
+(define (1+ arg)
+  (+ arg 1))
+(define (1- arg)
+  (- arg 1))
+|#
+
+;2b
+
+#|
+(define (install-primitive! title proc)
+  (extend-environment title proc nil))
+(install-primitive! 'square (lambda (x) (* x x)))
+
+(define a '(1 2 3 4 5 6 7))
+(set! a (reverse a))
+(set! a (cons 8 a))
+(reverse a)|#
