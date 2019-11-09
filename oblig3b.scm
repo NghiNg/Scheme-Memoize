@@ -30,33 +30,32 @@
 
 ;2a
 
-;
 (set! primitive-procedures (append primitive-procedures
                                    (cons (list '1+ (lambda (x) (+ x 1))) '())))
 (set! primitive-procedures (append primitive-procedures
                                    (cons (list '1- (lambda (x) (- x 1))) '())))
 (set! the-global-environment (setup-environment))
 
-#|
-|#
 
+;the-global-environment
 ;2b
 
-#|
+
 (define (install-primitive! title proc)
-  (define-variable! title proc the-global-environment))
+  (set! primitive-procedures (append primitive-procedures
+                                   (cons (list title proc) '()))))
 
-;(define-variable! '() '() the-global-environment)
+(set! primitive-procedures (append primitive-procedures
+                                   (cons (list 'install-primitive!(lambda (title proc) (define-variable! title proc the-global-environment))) '())))
 
-(mc-eval (install-primitive! 'square (lambda (x) (* x x))) the-global-environment)
-|#
+(set! the-global-environment (setup-environment))
 
 #|
 (define a '(1 2 3 4 5 6 7))
 (set! a (reverse a))
 (set! a (cons 8 a))
 (reverse a)|#
-
+#|
 
 (define (and2 . args)
   (if (null? (cdr args))
@@ -75,7 +74,7 @@
           #t
           (apply or2 (cdr args)))))
 
-
+|#
 ;(mc-eval (or2 #f #t #t #t) the-global-environment)
 
 #|
@@ -85,5 +84,5 @@
   (if (null? args)
       utfall2
 |#
-      
+      (read-eval-print-loop)
   
